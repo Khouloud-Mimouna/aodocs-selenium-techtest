@@ -1,8 +1,6 @@
 package selenium.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,7 +13,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 
 import selenium.driver.Browser;
 import selenium.driver.WebDriverUtility;
@@ -32,12 +29,10 @@ public class AODocs_Test {
 		// On instancie notre driver, et on configure notre temps d'attente
 		driver = WebDriverUtility.getWebDriver(Browser.CHROME);
 		baseUrl = "https://www.google.com";
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
 	}
 
 	@Test
-    @Order(1)
+	@Order(1)
 	public void seachAODocsInGoogle() throws Exception {
 
 		// On se connecte au google
@@ -50,8 +45,8 @@ public class AODocs_Test {
 
 		// BEFORE YOU CONTINUE GOOGLE POPUP
 		driver.switchTo().frame(0);
-		WebElement agree_button = driver.findElement(By.id("introAgreeButton"));
-		agree_button.click();
+		WebElement agreeButton = driver.findElement(By.id("introAgreeButton"));
+		agreeButton.click();
 
 		// In the result, open the website www.aodocs.com
 		WebElement result = driver.findElement(By.xpath("//a[@href ='https://www.aodocs.com/']"));
@@ -60,55 +55,54 @@ public class AODocs_Test {
 	}
 
 	@Test
-    @Order(2)
+	@Order(2)
 	public void requestDemo() throws Exception {
 		// To wait for element visible
 
-	
 		// Into the website click on the "Request a demo" button
-		WebElement demo_button = driver
+		WebElement demoButton = driver
 				.findElement(By.xpath("//a[@href ='https://www.aodocs.com/contact?request_type=request_demo']"));
-		demo_button.click();
+		demoButton.click();
 
-		// Fill the form with a first name
-		WebElement firstname_input = driver.findElement(By.name("firstname"));
-		firstname_input.sendKeys("khouloud");
+		// Fill the form with a "first name"
+		WebElement firstnameInput = driver.findElement(By.name("firstname"));
+		firstnameInput.sendKeys("khouloud");
 
-		// set empty in the "Last Name" field
-		WebElement lastname_input = driver.findElement(By.name("lastname"));
-		lastname_input.sendKeys("");
+		// Set empty in the "last name" field
+		WebElement lastnameInput = driver.findElement(By.name("lastname"));
+		lastnameInput.sendKeys("");
 
 		// Fill a random string in the "Your Email" field
-		WebElement email_input = driver.findElement(By.name("email"));
-		email_input.sendKeys(RandomStringUtils.randomAlphabetic(6));
+		WebElement emailInput = driver.findElement(By.name("email"));
+		emailInput.sendKeys(RandomStringUtils.randomAlphabetic(6));
 
 		// Choose a value in Company Size
-		WebElement companySize_value = driver.findElement(By.xpath("//select[@name='company_size__c']//option[3]"));
-		companySize_value.click();
+		WebElement companySizeValue = driver.findElement(By.xpath("//select[@name='company_size__c']//option[3]"));
+		companySizeValue.click();
 	}
 
 	@Test
-    @Order(3)
+	@Order(3)
 	public void checkTheErrorMessages() throws Exception {
-
 
 		// Check the error messages of the empty fields
 
-		WebElement errorMesgEmpty = driver.findElement(By.xpath("//div[contains(@class,'hs_lastname')]//label[@class='hs-error-msg']"));
-		String errorMesgEmpty_text = errorMesgEmpty.getText();
-		assertEquals(errorMesgEmpty_text, "Please complete this required field.");
+		WebElement errorMesgEmpty = driver
+				.findElement(By.xpath("//div[contains(@class,'hs_lastname')]//label[@class='hs-error-msg']"));
+		String errorMesgEmptyText = errorMesgEmpty.getText();
+		assertEquals(errorMesgEmptyText, "Please complete this required field.");
 
 		// Check the error messages of the email format
-		
-		WebElement errorMesgEmail = driver.findElement(By.xpath("//div[contains(@class,'hs_email')]//label[@class='hs-error-msg']"));
-		String errorMesgEmail_text = errorMesgEmail.getText();
-		assertEquals(errorMesgEmail_text, "Email must be formatted correctly.");
+
+		WebElement errorMesgEmail = driver
+				.findElement(By.xpath("//div[contains(@class,'hs_email')]//label[@class='hs-error-msg']"));
+		String errorMesgEmailText = errorMesgEmail.getText();
+		assertEquals(errorMesgEmailText, "Email must be formatted correctly.");
 
 	}
-	
-	 @AfterAll
-	    public void closeBrowser() {
 
-	        driver.quit();
-	    }
+	@AfterAll
+	public void closeBrowser() {
+		driver.quit();
+	}
 }
